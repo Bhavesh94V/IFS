@@ -8,6 +8,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowRight, BarChart3, CreditCard, HelpCircle, LineChart, Phone, PieChart, User, Wallet } from "lucide-react"
 import Link from "next/link"
 import { useAuth } from "@/components/auth/auth-provider"
+import Index from "./Index"
+import { ChartPie, TrendingUp, FileText, Info } from "lucide-react";
+import InvestmentChart from "@/components/InvestmentChart";
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -32,6 +35,56 @@ export default function DashboardPage() {
   if (!isAuthenticated) {
     return null // Will redirect in useEffect
   }
+
+
+  // Investment data for both plans
+  const quarterlyPlanData = {
+    name: "Quarterly Compounding Plan",
+    investmentAmount: 30000,
+    currentValue: 34875,
+    profit: 4875,
+    startDate: "01 Jan 2023",
+    nextPayout: "30 Jun 2023",
+    isActive: true,
+    monthlyData: [
+      { month: "Jan", value: 30000 },
+      { month: "Feb", value: 30600 },
+      { month: "Mar", value: 31400 },
+      { month: "Apr", value: 32900 },
+      { month: "May", value: 33800 },
+      { month: "Jun", value: 34875 }
+    ],
+    quarterlyData: [
+      { quarter: "Q1 2023", returns: 4.2 },
+      { quarter: "Q2 2023", returns: 3.8 },
+      { quarter: "Q3 2023", returns: 5.1 },
+      { quarter: "Q4 2023", returns: 3.5 }
+    ]
+  };
+
+  const treeFamilyPlanData = {
+    name: "Tree Family Plan",
+    investmentAmount: 20000,
+    currentValue: 23250,
+    profit: 3250,
+    startDate: "15 Feb 2023",
+    nextPayout: "15 Aug 2023",
+    isActive: true,
+    monthlyData: [
+      { month: "Feb", value: 20000 },
+      { month: "Mar", value: 20400 },
+      { month: "Apr", value: 21200 },
+      { month: "May", value: 22300 },
+      { month: "Jun", value: 22800 },
+      { month: "Jul", value: 23250 }
+    ],
+    quarterlyData: [
+      { quarter: "Q1 2023", returns: 3.8 },
+      { quarter: "Q2 2023", returns: 4.7 },
+      { quarter: "Q3 2023", returns: 4.3 },
+      { quarter: "Q4 2023", returns: 3.9 }
+    ]
+  };
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -227,8 +280,17 @@ export default function DashboardPage() {
                         Download PDF
                       </Button>
                     </div>
-                    <div className="h-64 bg-gray-100 rounded flex items-center justify-center">
-                      <p className="text-gray-500">Growth chart would be displayed here</p>
+                    <div className="h-84 bg-gray-100 rounded flex items-center justify-center">
+                      <div className=" w-full">
+                        <InvestmentChart
+                          investmentAmount={quarterlyPlanData.investmentAmount}
+                          currentValue={quarterlyPlanData.currentValue}
+                          profit={quarterlyPlanData.profit}
+                          colorScheme="teal"
+                          chartType="growth"
+                          monthlyData={quarterlyPlanData.monthlyData}
+                        />
+                      </div>
                     </div>
                   </div>
 
@@ -242,8 +304,17 @@ export default function DashboardPage() {
                         Download PDF
                       </Button>
                     </div>
-                    <div className="h-64 bg-gray-100 rounded flex items-center justify-center">
-                      <p className="text-gray-500">Returns chart would be displayed here</p>
+                    <div className="h-auto bg-gray-100 rounded flex items-center justify-center">
+                      <div className="h-83 w-full">
+                        <InvestmentChart
+                          investmentAmount={treeFamilyPlanData.investmentAmount}
+                          currentValue={treeFamilyPlanData.currentValue}
+                          profit={treeFamilyPlanData.profit}
+                          colorScheme="amber"
+                          chartType="quarterly"
+                          quarterlyData={treeFamilyPlanData.quarterlyData}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

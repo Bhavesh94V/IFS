@@ -194,7 +194,7 @@ export default function PlanDetails({ planType, id }: PlanDetailsProps) {
       className={`relative overflow-hidden border-none shadow-lg transform transition-all duration-300 hover:shadow-xl hover:-translate-y-2 ${expanded ? "z-10" : ""}`}
     >
       <div className={`absolute top-0 left-0 w-full h-2 bg-${plan.color}`}></div>
-      {plan.popular && (
+      {plan && (
         <div className="absolute top-2 right-2 bg-gold text-white text-xs font-bold px-2 py-1 rounded">POPULAR</div>
       )}
       <CardContent className="pt-8">
